@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SnakeyPete</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/snake.css">
+
+  </head>
+  <body>
+
+    <script type="text/javascript" src="../js/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="../js/utils.js"></script>
+    <script type="text/javascript" src="../js/snake.js"></script>
+    <script type="text/javascript" src="../js/board.js"></script>
+    <script type="text/javascript" src="../js/snake-view.js"></script>
+
+    <figure class="snake-game" tabindex="0">
+      <strong class="score"></strong>
+    </figure>
+
+    <script type="text/javascript">
+      new MySnake.View($("figure.snake-game"))
+    </script>
+
+  </body>
+</html>
