@@ -4,9 +4,7 @@
   var Utils = window.MySnake.Utils;
 
   var Board = window.MySnake.Board = function() {
-    this.grid = [];
     this.coolGrid = {};
-    this.setupGrid();
     this.setupCoolGrid();
     this.snake = new MySnake.Snake(this);
     this.apples = [];
@@ -27,15 +25,6 @@
     }
   };
 
-  Board.prototype.setupGrid = function() {
-    for (var i = 0; i < Board.SIZE; i++) {
-      this.grid.push([]);
-      for (var j = 0; j < Board.SIZE; j++) {
-        this.grid[i].push(null);
-      };
-    };
-  };
-
   Board.prototype.setupCoolGrid = function() {
     for (var i = 0; i < Board.SIZE; i++) {
       for (var j = 0; j < Board.SIZE; j++) {
@@ -52,18 +41,11 @@
       var $currentCell = $($cells[i])
       var currentPos = $currentCell.data("position");
       $currentCell.addClass(this.coolGrid[currentPos]);
-      // you can't see this data from the html, but you CAN see it here;
-
-      // if (this.snake.onPosition(currentPos)) {
-      //   $currentCell.addClass("snake");
-      // } else if (this.isApple(currentPos)) {
-      //   $currentCell.addClass("apple");
-      // };
     };
     //PH**** - remake this so that the snake and apples will mark themselves into the coolGrid object with value "apple", "snake", "block", etc.
+    //onPosition, isApple
 
     $(".snake-game .score").text(this.score);
-    //QUESTION: ok to add score from board here?
   };
 
   Board.prototype.growApples = function() {
@@ -85,14 +67,7 @@
   };
 
   Board.prototype.isApple = function(pos) {
-    return Utils.includes(this.apples, pos);
-  };
-
-  Board.prototype.mapSnake = function() {       //won't need this with new hash
-    this.snake.segments.forEach( function(segPos) {
-      this.grid[segPos[0]][segPos[1]] = "S";
-    }.bind(this));
-    // if didn't bind, context would be window!
+    return this.coolGrid[pos] === 'apple';
   };
 
   Board.prototype.turnSnake = function(dir) {
