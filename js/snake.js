@@ -8,7 +8,7 @@
     this.board = board;
     this.dir = "N";
     this.prevDir = "N";
-    this.segments = [[18, 6], [17, 6], [16, 6]];
+    this.segments = [[18, 6], [17, 6], [16, 6]];    //tail is FIRST
     this.appleJuice = 0;
   };
 
@@ -32,12 +32,14 @@
     this.handleApple(newPos);
 
     this.segments.push(newPos);
+    this.board.coolGrid[newPos] = 'snake'
     this.prevDir = this.dir;
 
     if (this.appleJuice) {      //evals false if === 0
-      this.appleJuice -= 1;
+      this.appleJuice -= 1;     //PH - extends snake here by not cutting tail
     } else {
-      this.segments.shift();
+      var lastPos = this.segments.shift();
+      this.board.coolGrid[lastPos] = '';
     };
   };
 
@@ -62,11 +64,9 @@
   };
 
   Snake.prototype.checkOnBoard = function(pos) {
-    console.log(pos)
-    if (pos[0] < 0 || pos[0] >= ( this.board.gridSize() ) ||
-        pos[1] < 0 || pos[1] >= ( this.board.gridSize() )) {
+    if (!MySnake.Board.onBoard(pos)) {
       throw "off board!";
-    };
+    }
   };
 
   Snake.prototype.handleApple = function(pos) {
