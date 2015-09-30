@@ -14,7 +14,7 @@
     this.intervalId = setInterval(this.step.bind(this), View.SPEED);
   };
 
-  View.SPEED = 80;
+  View.SPEED = 75;
   View.KEYMAPS = {
     38: "N",
     39: "E",

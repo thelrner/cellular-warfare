@@ -22,30 +22,36 @@ body {
   font-size: 16px;
   font-weight: bold;
   text-align: center;
+  background: black;
 }
 
 figure.snake-game {
   position: relative;
-  border: 5px solid black;
-  height: 600px;
-  width: 600px;
+  border: 5px solid white;
+  height: 500px;
+  width: 500px;
   margin: auto;
-  background: blue;
 }
 
 .snake-game div {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   float: left;
-  background: white;
+  background: black;
 }
 
 .snake-game div.snake {      /*is a snake*/
-  background: red;
+  background: green;
 }
 
 .snake-game div.apple {
   background: purple;
+}
+
+.snake-game div.cell {
+  height: 8px;
+  width: 8px;
+  border: 1px solid red;
 }
 
 .snake-game .score {

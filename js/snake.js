@@ -32,14 +32,14 @@
     this.handleApple(newPos);
 
     this.segments.push(newPos);
-    this.board.coolGrid[newPos] = 'snake'
+    this.board.coolGrid[newPos].snake = true;
     this.prevDir = this.dir;
 
     if (this.appleJuice) {      //evals false if === 0
       this.appleJuice -= 1;     //PH - extends snake here by not cutting tail
     } else {
       var lastPos = this.segments.shift();
-      this.board.coolGrid[lastPos] = '';
+      this.board.coolGrid[lastPos].snake = false;      //PH**** refactor
     };
   };
 
