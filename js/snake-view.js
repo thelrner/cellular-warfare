@@ -11,7 +11,8 @@
     this.setupPage();
     this.board = new MySnake.Board();
     this.bindEvents();
-    this.intervalId = setInterval(this.step.bind(this), View.SPEED);
+    this.start();
+    this.paused = false;
   };
 
   View.SPEED = 75;
@@ -19,8 +20,18 @@
     38: "N",
     39: "E",
     40: "S",
-    37: "W"
-  }
+    37: "W",
+  };
+
+  View.prototype.start = function() {
+    this.intervalId = setInterval(this.step.bind(this), View.SPEED);
+    this.paused = false;
+  };
+
+  View.prototype.halt = function() {
+    clearInterval(this.intervalId);
+    this.paused = true;
+  };
 
   View.prototype.setupPage = function() {
     for (var i = 0; i < MySnake.Board.SIZE; i++) {
@@ -28,6 +39,7 @@
         var $newCell = $("<div></div>");
         //we don't assign class here because we intend to wipe it clean
         $newCell.data("position", [i, j]);
+        $newCell.attr('data-crazy', [i, j]);
         //if we set an attribute "position", it would translate array to string
         this.$el.append($newCell);
       };
@@ -42,7 +54,19 @@
 
   View.prototype.handleKeyDown = function(e) {
     e.preventDefault();
+    // console.log(e.keyCode);
+    if (e.keyCode === 32) {
+      this.togglePause();
+    }
     this.board.turnSnake( View.KEYMAPS[e.keyCode] );
+  };
+
+  View.prototype.togglePause = function() {
+    if (this.paused) {
+      this.start();
+    } else {
+      this.halt();
+    }
   };
 
   View.prototype.step = function() {

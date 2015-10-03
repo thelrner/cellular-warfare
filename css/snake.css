@@ -54,6 +54,12 @@ figure.snake-game {
   border: 1px solid red;
 }
 
+.snake-game div.cellFriendly {
+  height: 8px;
+  width: 8px;
+  border: 1px solid lightblue;
+}
+
 .snake-game .score {
   position: absolute;
   margin: auto;

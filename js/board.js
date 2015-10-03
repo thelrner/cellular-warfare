@@ -34,6 +34,7 @@
           snake: false,
           apple: false,
           cell: false,
+          cellFriendly: false,
         };
         this.cells[[i, j]] = new MySnake.Cell(this, [i, j]);
       };
@@ -42,6 +43,7 @@
 
   Board.prototype.render = function() {
     var $divs = $(".snake-game div");
+    // debugger;            //PH** - best place to debugger. before everything's rendered.
     $divs.removeClass();
     this.seedEnemies();
     this.refreshCells();
@@ -80,8 +82,10 @@
     MySnake.Cell.DELTAS.forEach( function(delta) {
       coordinates.push([ pos[0] + delta[0], pos[1] + delta[1] ]);
     })
+    debugger;
     coordinates.forEach( function(coord) {
-      // this.cells[coord].convertToFriendly();
+      this.cells[coord].seedFriend();
+      //PH** mark the board, depending on whether friendly or not.
     }.bind(this));
   };
 
@@ -132,6 +136,12 @@
     var applePos = this.apples.pop();
     this.coolGrid[applePos].apple = false;
     this.seedFriendlies(applePos);
+  };
+
+  Board.prototype.clearCellClasses = function(pos) {
+    var div = this.coolGrid[pos];
+    div.cell = false;
+    div.cellFriendly = false;
   };
 
 })();
