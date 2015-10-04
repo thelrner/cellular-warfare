@@ -33,8 +33,9 @@
         this.coolGrid[[i, j]] = {
           snake: false,
           apple: false,
-          cell: false,
-          cellFriendly: false,
+          dead: false,
+          foe: false,
+          friend: false
         };
         this.cells[[i, j]] = new MySnake.Cell(this, [i, j]);
       };
@@ -53,9 +54,9 @@
       var currentPos = $currentDiv.data("position");
       var divClasses = this.coolGrid[currentPos];
 
-      Object.keys(divClasses).forEach( function(divClass) {
-        if (divClasses[divClass]) {
-          $currentDiv.addClass(divClass);
+      Object.keys(divClasses).forEach( function(className) {
+        if (divClasses[className]) {
+          $currentDiv.addClass(className);
         }
       });
     };
@@ -72,12 +73,12 @@
     var fpent = [[19, 20], [20, 20], [19, 21], [20, 19], [21, 20]];
     // var fpent = [[9, 10], [10, 10]];
     fpent.forEach( function(pos) {
-      this.cells[pos].seedEnemy();    //PH** - should I seed with nextAlive too?
+      this.cells[pos].seedFoe();    //PH** - should I seed with nextAlive too?
     }.bind(this));
     this.seeds += 1;
   };
 
-  Board.prototype.seedFriendlies = function(pos) {
+  Board.prototype.seedFriends = function(pos) {
     var coordinates = [];
     MySnake.Cell.DELTAS.forEach( function(delta) {
       var newPos = [ pos[0] + delta[0], pos[1] + delta[1] ];
@@ -137,13 +138,14 @@
     this.score += Board.APPLEVALUE;
     var applePos = this.apples.pop();
     this.coolGrid[applePos].apple = false;
-    this.seedFriendlies(applePos);
+    this.seedFriends(applePos);
   };
 
   Board.prototype.clearCellClasses = function(pos) {
     var div = this.coolGrid[pos];
-    div.cell = false;
-    div.cellFriendly = false;
+    div.dead = false;
+    div.friend = false;
+    div.foe = false;
   };
 
 })();

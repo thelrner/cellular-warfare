@@ -10,11 +10,11 @@
     // this.friendly = false;
     // this.friendlyNext = false;
 
-    // status can be either dead, friend, or enemy;
+    // status can be either dead, friend, or foe;
     this.status = 'dead';
     this.statusNext = 'dead';
     this.friendCount = 0;
-    this.enemyCount = 0;
+    this.foeCount = 0;
   };
 
   Cell.BIRTHREQ = 2;
@@ -32,8 +32,8 @@
   ];
 
   Cell.prototype.prepareNextState = function() {
-    if (this.board.coolGrid[this.pos].apple && !this.friendly) {
-      this.aliveNext = false;
+    if (this.board.coolGrid[this.pos].apple) {
+      this.statusNext = 'dead';
       return;
     }
 
@@ -43,55 +43,44 @@
 
     this.setNeighborLiveCounts();
 
-    if (this.friendly) {
-      if (this.friendCount === 2 || this.friendCount === 3) {
-        this.aliveNext = true;
-      } else {
-        this.aliveNext = false;
-        this.convertToEnemy();      //do i need this? Or should I always stand ready to convert to whichever?
-        //PH**** - problems is, you convert to an enemy before actually painting to the board... your aliveNext has already changed to false, but you're read as a live enemy cell THIS ROUND!
+    if (this.foeCount === 3) {
+      this.statusNext = 'foe';
+    } else if (this.foeCount === 2) {
+      if (this.status === 'foe') {
+        this.statusNext = 'foe';
       }
     } else {
-      if (this.friendCount === 3) {
-        this.convertToFriendly();
-        this.aliveNext = true;
-      } else if (this.enemyCount === 3) {
-        this.aliveNext = true;
-      } else if (this.enemyCount === 2) {
-        this.aliveNext = this.alive;
-      } else {
-        this.aliveNext = false;
-      }
+      this.statusNext = 'dead';
     }
-    //PH** -- factor out magic numbers into constants
-    //PH** -- make a status instvar -- either friendly, dead, or enemy...
 
-
-    // if (this.enemyCount === Cell.LIVEREQ) {
-    //   this.aliveNext = true;
-    // } else if (this.enemyCount === Cell.BIRTHREQ) {
-    //   if (this.alive) {
-    //     this.aliveNext = true;
-    //   } else {
-    //     this.aliveNext = false;
+    // if (this.friendCount === 3) {
+    //   this.statusNext = 'friend';
+    // } else if (this.foeCount === 3) {
+    //   this.statusNext = 'foe';
+    //
+    // } else if (this.friendCount === 2) {
+    //   if (this.status === 'friend') {
+    //     this.statusNext = 'friend';
+    //   }
+    //   //if you're an enemy, you ignore friendCounts...
+    // } else if (this.foeCount === 2) {
+    //   //by now, you'll already have checked for friendCount, so if you get here you must be an enemy
+    //   if (this.status === 'foe') {
+    //     this.statusNext = 'foe';
     //   }
     // } else {
-    //   this.aliveNext = false;
+    //   this.statusNext = 'dead';
     // }
   };
 
   Cell.prototype.advanceNextState = function() {
-    this.alive = this.aliveNext;
-    this.friendly = this.friendlyNext;
+    this.status = this.statusNext;
 
     this.board.clearCellClasses(this.pos);
     var boardDiv = this.board.coolGrid[this.pos]
 
-    if (this.friendly) {
-      boardDiv.cellFriendly = this.alive;
-    } else {
-      boardDiv.cell = this.alive;
-    }
+    //PH -- cases here!!!
+    boardDiv[this.status] = true;
 
     // this.aliveNext = false;       //just a reset
   };
@@ -114,34 +103,26 @@
 
   Cell.prototype.setNeighborLiveCounts = function() {
     this.friendCount = 0;
-    this.enemyCount = 0;
+    this.foeCount = 0;
     this.neighbors().forEach( function(neighbor) {
-      if (neighbor.alive) {
-        neighbor.friendly ? this.friendCount += 1 : this.enemyCount += 1;
+      if (neighbor.status === 'friend') {
+        this.friendCount += 1;
+      } else if (neighbor.status === 'foe') {
+        this.foeCount += 1;
       }
     }.bind(this) );
   };
 
-  Cell.prototype.seedEnemy = function() {
-    if (this.friendly) {
+  Cell.prototype.seedFoe = function() {
+    if (this.status === 'friend') {     //PH** - added precaution
       return
     } else {
-      this.convertToEnemy();
-      this.alive = true;
+      this.status = 'foe';
     }
   };
 
   Cell.prototype.seedFriend = function() {
-    this.convertToFriendly();
-    this.alive = true;
-  }
-
-  Cell.prototype.convertToFriendly = function() {
-    this.friendlyNext = true;
-  };
-
-  Cell.prototype.convertToEnemy = function() {
-    this.friendlyNext = false;
+    this.status = 'friend';
   };
 
 })();

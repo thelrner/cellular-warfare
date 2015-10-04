@@ -48,13 +48,13 @@ figure.snake-game {
   background: purple;
 }
 
-.snake-game div.cell {
+.snake-game div.foe {
   height: 8px;
   width: 8px;
   border: 1px solid red;
 }
 
-.snake-game div.cellFriendly {
+.snake-game div.friend {
   height: 8px;
   width: 8px;
   border: 1px solid lightblue;
