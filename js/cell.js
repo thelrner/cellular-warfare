@@ -8,6 +8,7 @@
     this.alive = false;
     this.aliveNext = false;
     this.friendly = false;
+    this.friendlyNext = false;
     this.friendLiveCount = 0;
     this.enemyLiveCount = 0;
   };
@@ -77,6 +78,7 @@
 
   Cell.prototype.advanceNextState = function() {
     this.alive = this.aliveNext;
+    this.friendly = this.friendlyNext;
 
     this.board.clearCellClasses(this.pos);
     var boardDiv = this.board.coolGrid[this.pos]
@@ -131,11 +133,11 @@
   }
 
   Cell.prototype.convertToFriendly = function() {
-    this.friendly = true;
+    this.friendlyNext = true;
   };
 
   Cell.prototype.convertToEnemy = function() {
-    this.friendly = false;
+    this.friendlyNext = false;
   };
 
 })();

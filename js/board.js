@@ -78,11 +78,13 @@
   };
 
   Board.prototype.seedFriendlies = function(pos) {
-    var coordinates = []
+    var coordinates = [];
     MySnake.Cell.DELTAS.forEach( function(delta) {
-      coordinates.push([ pos[0] + delta[0], pos[1] + delta[1] ]);
-    })
-    debugger;
+      var newPos = [ pos[0] + delta[0], pos[1] + delta[1] ];
+      if (Board.onBoard(newPos)) {
+        coordinates.push(newPos);
+      }
+    });
     coordinates.forEach( function(coord) {
       this.cells[coord].seedFriend();
       //PH** mark the board, depending on whether friendly or not.
