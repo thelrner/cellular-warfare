@@ -10,7 +10,6 @@
     this.snake = new MySnake.Snake(this);
     this.apples = [];
     this.score = 0;
-    this.seeds = 0;
     this.render();      //should render at initialize?
   };
 
@@ -65,15 +64,14 @@
   };
 
   Board.prototype.seedEnemies = function() {
-    //PH** - RULES: should be greater than 6 away from player head. Should be ON THE BOARD (so choose random restraints accordingly). Should use fpent or methuselah deltas.
-    if (this.seeds > 0) {
+    //should come from anywhere
+    if (this.score % 5) {     //doesn't return if divisible
       return;
     }
 
     var fpent = [[19, 20], [20, 20], [19, 21], [20, 19], [21, 20]];
-    // var fpent = [[9, 10], [10, 10]];
     fpent.forEach( function(pos) {
-      this.cells[pos].seedFoe();    //PH** - should I seed with nextAlive too?
+      this.cells[pos].seedFoe();
     }.bind(this));
     this.seeds += 1;
   };

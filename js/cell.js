@@ -5,12 +5,6 @@
   var Cell = window.MySnake.Cell = function(board, pos) {
     this.pos = pos;
     this.board = board;
-    // this.alive = false;
-    // this.aliveNext = false;
-    // this.friendly = false;
-    // this.friendlyNext = false;
-
-    // status can be either dead, friend, or foe;
     this.status = 'dead';
     this.statusNext = 'dead';
     this.friendCount = 0;
@@ -38,6 +32,7 @@
     }
 
     // enemy cells surrounded by 3 friendlies converts to a friendly.
+    //PH** - switch to switch statements
     this.setNeighborLiveCounts();
 
     if (this.friendCount === 3) {
@@ -49,9 +44,7 @@
       if (this.status === 'friend') {
         this.statusNext = 'friend';
       }
-      //if you're an enemy, you ignore friendCounts...
     } else if (this.foeCount === 2) {
-      //by now, you'll already have checked for friendCount, so if you get here you must be an enemy
       if (this.status === 'foe') {
         this.statusNext = 'foe';
       }
@@ -66,17 +59,10 @@
     this.board.clearCellClasses(this.pos);
     var boardDiv = this.board.coolGrid[this.pos];
 
-    //PH -- cases here!!!
     boardDiv[this.status] = true;
-
-    // this.aliveNext = false;       //just a reset
   };
 
   Cell.prototype.neighbors = function() {
-    //won't I need to check friendly here?...I mean, if I'm already an enemy, and I'm surrounded by 3 friends, I want to turn into a FRIEND.
-    //if I'm an enemy and surrounded by 3 friendlies, I should turn into a friendly? Or should I die?
-    //Let's try: cell dies if it's surrounded by 3 friendlies ()
-    //AKA: IF YOU'RE AN ENEMY, CASE FOR SURROUNDING FRIENDLIES HERE
     var neighbors = [];
     Cell.DELTAS.forEach( function(delta) {
       var deltaPos = [ this.pos[0] + delta[0], this.pos[1] + delta[1] ];
