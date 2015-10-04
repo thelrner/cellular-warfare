@@ -40,7 +40,7 @@
     this.setNeighborLiveCounts();
 
     if (this.friendly) {
-      if (this.friendLiveCount === 2 || this.friendyCount === 3) {
+      if (this.friendLiveCount === 2 || this.friendLiveCount === 3) {
         this.aliveNext = true;
       } else {
         this.aliveNext = false;
