@@ -50,7 +50,7 @@
 
   Snake.prototype.turn = function(dir) {
     if(this.isOpposite(dir)) {
-      throw "can't move in opposite direction!";      //prolly should return
+      return;
     };
     this.dir = dir;       //QUESTION: still updates this.dir after throw?
   };
