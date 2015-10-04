@@ -1,10 +1,10 @@
 (function() {
-  window.MySnake = window.MySnake || {};
+  window.War = window.War || {};
 
-  var View = MySnake.View = function(el) {
+  var View = War.View = function(el) {
     this.$el = $(el);
     this.setupPage();
-    this.board = new MySnake.Board();
+    this.board = new War.Board();
     this.demoMode = true;
     this.start();
     this.bindEvents();
@@ -35,7 +35,7 @@
     $("strong.game-over").addClass("hidden");
     $("strong.new-game").addClass("hidden");
     this.board.clearBoard();
-    this.board = new MySnake.Board();
+    this.board = new War.Board();
     this.gameOver = false;
     this.start();
   };
@@ -58,8 +58,8 @@
   };
 
   View.prototype.setupPage = function() {
-    for (var i = 0; i < MySnake.Board.SIZE; i++) {
-      for (var j = 0; j < MySnake.Board.SIZE; j++) {
+    for (var i = 0; i < War.Board.SIZE; i++) {
+      for (var j = 0; j < War.Board.SIZE; j++) {
         var $newCell = $("<div></div>");
         $newCell.data("position", [i, j]);
         this.$el.append($newCell);

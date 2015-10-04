@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>SnakeyPete</title>
 
-    <link rel="stylesheet" type="text/css" href="css/snake.css">
+    <link rel="stylesheet" type="text/css" href="css/war.css">
 
   </head>
   <body>
@@ -14,14 +14,14 @@
     <script type="text/javascript" src="js/snake.js"></script>
     <script type="text/javascript" src="js/board.js"></script>
     <script type="text/javascript" src="js/cell.js"></script>
-    <script type="text/javascript" src="js/snake-view.js"></script>
+    <script type="text/javascript" src="js/view.js"></script>
 
     <div class="game-container group">
 
       <div class="game-viewer">
         <h1>Viral Warfare</h1>
 
-        <figure class="snake-game" tabindex="0">
+        <figure class="war-game" tabindex="0">
           <strong class="game-over hidden">
             Game Over
           </strong>
@@ -69,7 +69,7 @@
     </div>
 
     <script type="text/javascript">
-      new MySnake.View($("figure.snake-game"));
+      new War.View($("figure.war-game"));
     </script>
 
   </body>

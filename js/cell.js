@@ -1,7 +1,7 @@
 (function() {
-  window.MySnake = window.MySnake || {};
+  window.War = window.War || {};
 
-  var Cell = window.MySnake.Cell = function(board, pos) {
+  var Cell = window.War.Cell = function(board, pos) {
     this.pos = pos;
     this.board = board;
     this.status = 'dead';
@@ -69,7 +69,7 @@
     var neighbors = [];
     Cell.DELTAS.forEach( function(delta) {
       var deltaPos = [ this.pos[0] + delta[0], this.pos[1] + delta[1] ];
-      if ( MySnake.Board.onBoard(deltaPos) ) {
+      if ( War.Board.onBoard(deltaPos) ) {
         neighbors.push(this.board.cells[deltaPos]);
       }
     }.bind(this));

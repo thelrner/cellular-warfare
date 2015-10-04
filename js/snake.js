@@ -1,9 +1,9 @@
 (function() {
-  window.MySnake = window.MySnake || {};
+  window.War = window.War || {};
 
-  var Utils = window.MySnake.Utils;
+  var Utils = window.War.Utils;
 
-  var Snake = window.MySnake.Snake = function (board) {
+  var Snake = window.War.Snake = function (board) {
     this.board = board;
     this.dir = "N";
     this.prevDir = "N";
@@ -13,7 +13,7 @@
 
   Snake.APPLEPOWER = 2
   Snake.DIRS = ["N", "S", "E", "W"];
-  MySnake.DELTAS = {
+  War.DELTAS = {
     "N": [-1, 0],
     "S": [1, 0],
     "W": [0, -1],
@@ -27,7 +27,7 @@
   Snake.prototype.move = function() {
     this.checkPrevDir();
 
-    var newPos = Utils.plus(this.segments.slice(-1)[0], MySnake.DELTAS[this.dir]);
+    var newPos = Utils.plus(this.segments.slice(-1)[0], War.DELTAS[this.dir]);
     this.checkCollisions(newPos);
 
     this.segments.push(newPos);
@@ -59,7 +59,7 @@
   };
 
   Snake.prototype.isOpposite = function(dir) {
-    return Utils.isOppositeDeltas(MySnake.DELTAS[this.prevDir], MySnake.DELTAS[dir]);
+    return Utils.isOppositeDeltas(War.DELTAS[this.prevDir], War.DELTAS[dir]);
   };
 
   Snake.prototype.turn = function(dir) {
@@ -78,7 +78,7 @@
   };
 
   Snake.prototype.checkEdgeCollision = function(pos) {
-    if (!MySnake.Board.onBoard(pos)) {
+    if (!War.Board.onBoard(pos)) {
       throw "lose";
     }
   };

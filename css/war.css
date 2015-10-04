@@ -60,7 +60,7 @@ div.game-container div.game-viewer h1 {
   padding: 10px;
 }
 
-figure.snake-game {
+figure.war-game {
   position: relative;
   display: block;
   border: 5px solid white;
@@ -68,7 +68,7 @@ figure.snake-game {
   height: 500px;
 }
 
-figure.snake-game strong {
+figure.war-game strong {
   position: absolute;
   margin: auto;
 }
@@ -99,54 +99,54 @@ strong.new-game {
   cursor: pointer;
 }
 
-figure.snake-game strong.new-game:hover {
+figure.war-game strong.new-game:hover {
   color: green;
 }
 
-.snake-game div {
+.war-game div {
   width: 10px;
   height: 10px;
   float: left;
   background: black;
 }
 
-.snake-game div.snake {
+.war-game div.snake {
   background: green;
 }
 
-.snake-game div.apple {
+.war-game div.apple {
   background: lightblue;
 }
 
-.snake-game div.friend, div.foe {
+.war-game div.friend, div.foe {
   height: 8px;
   width: 8px;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
 
-.snake-game div.foe {
+.war-game div.foe {
   height: 8px;
   width: 8px;
   border: 1px solid rgb(127, 0, 0);    /* if no border transparency support */
   border: 1px solid rgba(255, 0, 0, .75);
 }
 
-.snake-game div.friend {
+.war-game div.friend {
   height: 8px;
   width: 8px;
   border: 1px solid lightblue;
   border: 1px solid rgba(173, 216, 230, .75);
 }
 
-.snake-game .score {
+.war-game .score {
   position: absolute;
   margin: auto;
   font-size: 25px;
   color: blue;
 }
 
-figure.snake-game:focus {
+figure.war-game:focus {
   outline: none;
 }
 

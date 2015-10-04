@@ -1,8 +1,8 @@
 (function() {
 
-  window.MySnake = window.MySnake || {};
+  window.War = window.War || {};
 
-  var Utils = window.MySnake.Utils = {};
+  var Utils = window.War.Utils = {};
 
   Utils.plus = function(array1, array2) {
     if (array1.length !== array2.length) {

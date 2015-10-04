@@ -1,13 +1,13 @@
 (function() {
-  window.MySnake = window.MySnake || {};
+  window.War = window.War || {};
 
-  var Utils = window.MySnake.Utils;
+  var Utils = window.War.Utils;
 
-  var Board = window.MySnake.Board = function(options) {
+  var Board = window.War.Board = function(options) {
     this.gridClasses = {};
     this.cells = {};
     this.setupGridClassesAndCells();
-    this.snake = new MySnake.Snake(this);
+    this.snake = new War.Snake(this);
     this.apples = [];
     this.score = 0;
     this.render();
@@ -37,17 +37,17 @@
           foe: false,
           friend: false
         };
-        this.cells[[i, j]] = new MySnake.Cell(this, [i, j]);
+        this.cells[[i, j]] = new War.Cell(this, [i, j]);
       };
     };
   };
 
   Board.prototype.clearBoard = function() {
-    $(".snake-game div").removeClass();
+    $(".war-game div").removeClass();
   };
 
   Board.prototype.render = function() {
-    var $divs = $(".snake-game div");
+    var $divs = $(".war-game div");
     $divs.removeClass();
 
     for (var i = 0; i < $divs.length; i++) {
@@ -75,7 +75,7 @@
   };
 
   Board.prototype.seedHelper = function(friend, pos) {
-    var deltas = (friend ? MySnake.Cell.DELTAS : MySnake.Cell.FPENT_DELTAS);
+    var deltas = (friend ? War.Cell.DELTAS : War.Cell.FPENT_DELTAS);
 
     var coordinates = [];
     deltas.forEach( function(delta) {
