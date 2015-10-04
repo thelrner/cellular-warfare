@@ -71,6 +71,7 @@
 
   View.prototype.step = function() {
     this.board.growApples();
+    this.board.handleCells();
     try {
       this.board.moveSnake();
     } catch(e) {

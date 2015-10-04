@@ -25,6 +25,8 @@
     [1, 1]
   ];
 
+  Cell.FPENT_DELTAS = [[-1, 0], [0, 0], [-1, 1], [0, -1], [1, 0]];
+
   Cell.prototype.prepareNextState = function() {
     if (this.board.coolGrid[this.pos].apple) {
       this.statusNext = 'dead';
@@ -37,6 +39,9 @@
 
     if (this.friendCount === 3) {
       this.statusNext = 'friend';
+      if (this.status === 'foe') {
+        this.board.scoreCellConversion();
+      }
     } else if (this.foeCount === 3) {
       this.statusNext = 'foe';
 

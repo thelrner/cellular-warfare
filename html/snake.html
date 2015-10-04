@@ -16,12 +16,45 @@
     <script type="text/javascript" src="../js/cell.js"></script>
     <script type="text/javascript" src="../js/snake-view.js"></script>
 
-    <figure class="snake-game" tabindex="0">
-      <strong class="score"></strong>
-    </figure>
+    <div class="game-container group">
+
+      <div class="game-viewer">
+        <h1>Snake Wars</h1>
+
+        <figure class="snake-game" tabindex="0">
+        </figure>
+      </div>
+
+      <p class="scorecard">
+        <h2>Score</h2>
+        <strong class="score"></strong>
+      </p>
+
+      <p class="rules">
+        <h2>Rules</h2>
+        Regular snake rules apply: eat apples, avoid the wall and yourself.
+        Enemy cells spawn randomly. Eating an apple spawns friendly cells.
+        Cell propagation obeys Conway's Game with a twist -- friendly cells capture enemy cells by surrounding them.
+      </p>
+
+      <p class="points">
+        Consuming an apple earns 50 points. Capturing an enemy cell earns 1 point.
+      </p>
+
+      <p class="controls">
+        <h2>Controls</h2>
+        <ul class="controls-items">
+          <li>SPACE - New Game</li>
+          <li>UP/DOWN/LEFT/RIGHT ARROWS - Move</li>
+          <li>P - Pause</li>
+
+        </ul>
+      </p>
+
+    </div>
 
     <script type="text/javascript">
-      var view = new MySnake.View($("figure.snake-game"))
+      // var view = new MySnake.View($("figure.snake-game"))
     </script>
 
   </body>

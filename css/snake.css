@@ -1,6 +1,6 @@
 /*RESET*/
 
-html, head, body, figure, ul, div, li {
+html, head, body, figure, ul, div, li, h1, h2, p {
   border: 0;
   margin: 0;
   padding: 0;
@@ -20,17 +20,33 @@ ul {
 body {
   font: sans-serif;
   font-size: 16px;
-  font-weight: bold;
   text-align: center;
   background: black;
+  color: white;
+  font-family: sans-serif;
+}
+
+body div.game-container {
+  width: 800px;
+}
+
+div.game-container div.game-viewer {
+  position: relative;
+  float: left;
+  margin: auto;
+}
+
+div.game-container div.game-viewer h1 {
+  font-size: 24px;
+  display: block;
+  text-align: center;
 }
 
 figure.snake-game {
   position: relative;
   border: 5px solid white;
-  height: 500px;
   width: 500px;
-  margin: auto;
+  height: 500px;
 }
 
 .snake-game div {
@@ -45,19 +61,28 @@ figure.snake-game {
 }
 
 .snake-game div.apple {
-  background: purple;
+  background: lightblue;
+}
+
+.snake-game div.friend, div.foe {
+  height: 8px;
+  width: 8px;
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
 }
 
 .snake-game div.foe {
   height: 8px;
   width: 8px;
-  border: 1px solid red;
+  border: 1px solid rgb(127, 0, 0);    /* if no border transparency support */
+  border: 1px solid rgba(255, 0, 0, .75);
 }
 
 .snake-game div.friend {
   height: 8px;
   width: 8px;
   border: 1px solid lightblue;
+  border: 1px solid rgba(173, 216, 230, .75);
 }
 
 .snake-game .score {

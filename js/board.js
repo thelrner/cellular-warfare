@@ -45,8 +45,6 @@
     var $divs = $(".snake-game div");
     // debugger;            //PH** - best place to debugger. before everything's rendered.
     $divs.removeClass();
-    this.seedEnemies();
-    this.refreshCells();
 
     for (var i = 0; i < $divs.length; i++) {
       var $currentDiv = $($divs[i]);
@@ -63,17 +61,21 @@
     $(".snake-game .score").text(this.score);
   };
 
-  Board.prototype.seedEnemies = function() {
-    //should come from anywhere
-    if (this.score % 5) {     //doesn't return if divisible
-      return;
-    }
+  Board.prototype.seedFoes = function() {
+    var pos = this.generateRandPos(2);
 
-    var fpent = [[19, 20], [20, 20], [19, 21], [20, 19], [21, 20]];
-    fpent.forEach( function(pos) {
+    var fpentDeltas = MySnake.Cell.FPENT_DELTAS;
+    var coordinates = [];
+    fpentDeltas.forEach( function(delta) {
+      var newPos = [ pos[0] + delta[0], pos[1] + delta[1] ];
+      if (Board.onBoard(newPos)) {
+        coordinates.push(newPos);
+      }
+    });
+
+    coordinates.forEach( function(pos) {
       this.cells[pos].seedFoe();
     }.bind(this));
-    this.seeds += 1;
   };
 
   Board.prototype.seedFriends = function(pos) {
@@ -89,6 +91,18 @@
       //PH** mark the board, depending on whether friendly or not.
     }.bind(this));
   };
+
+  Board.prototype.seedHelper = function(friend) {
+    var deltas = (friend ? MySnake.Cell.DELTAS : MySnake.Cell.FPENT_DELTAS);
+  };
+
+  Board.prototype.handleCells = function() {
+    this.refreshCells();
+
+    if (Math.random() < 0.1) {
+      this.seedFoes();
+    }
+  }
 
   Board.prototype.refreshCells = function() {
     var board = this;
@@ -106,18 +120,20 @@
       return;
     };
 
-    var randX = this.snake.segments[0][0];
-    var randY = this.snake.segments[0][1];
-    //so the function below works
-
-    while ( this.snake.onPosition([randX, randY]) ) {
-      randX = Math.floor( Math.random() * (Board.SIZE-1) );
-      randY = Math.floor( Math.random() * (Board.SIZE-1) );
-      //PH** - we seed with Board.SIZE - 1 because need a 3x3 effect!
+    var randomPos = [this.snake.segments[0][0], this.snake.segments[0][1]]
+    while ( this.snake.onPosition(randomPos) ) {
+      randomPos = this.generateRandPos(0);
     };
 
-    this.apples.push([randX, randY]);
-    this.coolGrid[ [randX, randY] ].apple = true;
+    this.apples.push(randomPos);
+    this.coolGrid[randomPos].apple = true;
+  };
+
+  Board.prototype.generateRandPos = function(padding) {
+    return [
+      Math.floor( Math.random() * (Board.SIZE - padding * 2) ) + padding,
+      Math.floor( Math.random() * (Board.SIZE - padding * 2) ) + padding
+    ];
   };
 
   Board.prototype.isApple = function(pos) {
@@ -144,6 +160,10 @@
     div.dead = false;
     div.friend = false;
     div.foe = false;
+  };
+
+  Board.prototype.scoreCellConversion = function() {
+    this.score += 1;
   };
 
 })();
