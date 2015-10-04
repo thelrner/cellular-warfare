@@ -3,7 +3,7 @@
 
   var Utils = window.MySnake.Utils;
 
-  var Board = window.MySnake.Board = function() {
+  var Board = window.MySnake.Board = function(options) {
     this.coolGrid = {};
     this.cells = {};
     this.setupCoolGridAndCells();
@@ -14,8 +14,9 @@
   };
 
   Board.SIZE = 50;
-  Board.MAXAPPLES = 1;
-  Board.APPLEVALUE = 10;
+  Board.MAX_APPLES = 1;
+  Board.APPLE_VALUE = 50;
+  Board.CAPTURE_VALUE = 1;
 
   Board.onBoard = function(pos) {
     if (pos[0] >= 0 && pos[0] < ( Board.SIZE ) &&
@@ -41,6 +42,10 @@
     };
   };
 
+  Board.prototype.clearBoard = function() {
+    $(".snake-game div").removeClass();
+  };
+
   Board.prototype.render = function() {
     var $divs = $(".snake-game div");
     $divs.removeClass();
@@ -57,41 +62,32 @@
       });
     };
 
-    $(".snake-game .score").text(this.score);
+    $("p.scorecard strong.score").text(this.score);
   };
 
   Board.prototype.seedFoes = function() {
     var pos = this.generateRandPos(2);
-
-    var fpentDeltas = MySnake.Cell.FPENT_DELTAS;
-    var coordinates = [];
-    fpentDeltas.forEach( function(delta) {
-      var newPos = [ pos[0] + delta[0], pos[1] + delta[1] ];
-      if (Board.onBoard(newPos)) {
-        coordinates.push(newPos);
-      }
-    });
-
-    coordinates.forEach( function(pos) {
-      this.cells[pos].seedFoe();
-    }.bind(this));
+    this.seedHelper(false, pos);
   };
 
   Board.prototype.seedFriends = function(pos) {
+    this.seedHelper(true, pos);
+  };
+
+  Board.prototype.seedHelper = function(friend, pos) {
+    var deltas = (friend ? MySnake.Cell.DELTAS : MySnake.Cell.FPENT_DELTAS);
+
     var coordinates = [];
-    MySnake.Cell.DELTAS.forEach( function(delta) {
+    deltas.forEach( function(delta) {
       var newPos = [ pos[0] + delta[0], pos[1] + delta[1] ];
       if (Board.onBoard(newPos)) {
         coordinates.push(newPos);
       }
     });
-    coordinates.forEach( function(coord) {
-      this.cells[coord].seedFriend();
-    }.bind(this));
-  };
 
-  Board.prototype.seedHelper = function(friend) {
-    var deltas = (friend ? MySnake.Cell.DELTAS : MySnake.Cell.FPENT_DELTAS);
+    coordinates.forEach( function(coord) {
+      friend ? this.cells[coord].seedFriend() : this.cells[coord].seedFoe();
+    }.bind(this));
   };
 
   Board.prototype.handleCells = function() {
@@ -100,7 +96,7 @@
     if (Math.random() < 0.1) {
       this.seedFoes();
     }
-  }
+  };
 
   Board.prototype.refreshCells = function() {
     var board = this;
@@ -114,7 +110,7 @@
   };
 
   Board.prototype.growApples = function() {
-    if (this.apples.length === Board.MAXAPPLES) {
+    if (this.apples.length === Board.MAX_APPLES) {
       return;
     };
 
@@ -147,10 +143,14 @@
   };
 
   Board.prototype.handleAppleEaten = function() {
-    this.score += Board.APPLEVALUE;
+    this.incrementScore(Board.APPLE_VALUE);
     var applePos = this.apples.pop();
     this.coolGrid[applePos].apple = false;
     this.seedFriends(applePos);
+  };
+
+  Board.prototype.incrementScore = function(num) {
+    this.score += num;
   };
 
   Board.prototype.clearCellClasses = function(pos) {
@@ -161,7 +161,7 @@
   };
 
   Board.prototype.scoreCellConversion = function() {
-    this.score += 1;
+    this.incrementScore(Board.CAPTURE_VALUE);
   };
 
 })();

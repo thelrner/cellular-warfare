@@ -33,10 +33,9 @@
       return;
     }
 
-    // enemy cells surrounded by 3 friendlies converts to a friendly.
-    //PH** - switch to switch statements
     this.setNeighborLiveCounts();
 
+    //opt for if-else rather than casing, due to testing multiple values
     if (this.friendCount === 3) {
       this.statusNext = 'friend';
       if (this.status === 'foe') {
@@ -92,7 +91,7 @@
   };
 
   Cell.prototype.seedFoe = function() {
-    if (this.status === 'friend') {     //PH** - added precaution
+    if (this.status === 'friend') {
       return
     } else {
       this.status = 'foe';

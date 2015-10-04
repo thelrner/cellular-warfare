@@ -8,7 +8,7 @@
     this.board = board;
     this.dir = "N";
     this.prevDir = "N";
-    this.segments = [[18, 6], [17, 6], [16, 6]];    //tail is FIRST
+    this.segments = [[39, 15], [38, 15], [37, 15]];
     this.appleJuice = 0;
   };
 
@@ -29,19 +29,27 @@
     this.checkPrevDir();
 
     var newPos = Utils.plus(this.segments.slice(-1)[0], MySnake.DELTAS[this.dir]);
-    this.checkCollision(newPos);
-    this.checkOnBoard(newPos);
-    this.handleApple(newPos);
+    this.checkCollisions(newPos);
 
     this.segments.push(newPos);
     this.board.coolGrid[newPos].snake = true;
     this.prevDir = this.dir;
 
-    if (this.appleJuice) {      //evals false if === 0
+    this.cutTailOrDrinkJuice();
+  };
+
+  Snake.prototype.checkCollisions = function(pos) {
+    this.checkSelfCollision(pos);
+    this.checkEdgeCollision(pos);
+    this.checkAndHandleApple(pos);
+  }
+
+  Snake.prototype.cutTailOrDrinkJuice = function() {
+    if (this.appleJuice) {
       this.appleJuice -= 1;     //PH - extends snake here by not cutting tail
     } else {
       var lastPos = this.segments.shift();
-      this.board.coolGrid[lastPos].snake = false;      //PH**** refactor
+      this.board.coolGrid[lastPos].snake = false;
     };
   };
 
@@ -62,21 +70,21 @@
     this.dir = dir;       //QUESTION: still updates this.dir after throw?
   };
 
-  Snake.prototype.checkCollision = function(pos) {
+  Snake.prototype.checkSelfCollision = function(pos) {
     for (var i = 0; i < this.segments.length; i++) {
       if ( Utils.equals(this.segments[i], pos) ) {
-        throw "You collide!"
+        throw "lose"
       };
     };
   };
 
-  Snake.prototype.checkOnBoard = function(pos) {
+  Snake.prototype.checkEdgeCollision = function(pos) {
     if (!MySnake.Board.onBoard(pos)) {
-      throw "off board!";
+      throw "lose";
     }
   };
 
-  Snake.prototype.handleApple = function(pos) {
+  Snake.prototype.checkAndHandleApple = function(pos) {
     if (this.board.isApple(pos)) {
       this.appleJuice += Snake.APPLEPOWER;
       this.board.handleAppleEaten();

@@ -4,15 +4,14 @@
   window.MySnake = window.MySnake || {};
 
   var View = MySnake.View = function(el) {
-    // this HTML el-ement will hold the display. this is our interface to the web. grabs an element on the page.
-    // altho, this already is a jQuery object -- what is the prevObject propty?
-
     this.$el = $(el);
     this.setupPage();
     this.board = new MySnake.Board();
-    this.bindEvents();
+    this.demoMode = true;
     this.start();
+    this.bindEvents();
     this.paused = false;
+    this.gameOver = false;
   };
 
   View.SPEED = 75;
@@ -21,6 +20,33 @@
     39: "E",
     40: "S",
     37: "W",
+  };
+
+  View.prototype.bindEvents = function() {
+    this.$el.focus();       //focuses on the figure element
+    this.$el.on("keydown", this.handleKeyDown.bind(this));
+    this.$el.on("click", "strong.new-game", this.startNewGame.bind(this));
+  };
+
+  View.prototype.startNewGame = function() {
+    if (this.demoMode) {
+      this.halt();
+      this.demoMode = false;
+    };
+    this.demoMode = false;
+    $("strong.game-over").addClass("hidden");
+    $("strong.new-game").addClass("hidden");
+    this.board.clearBoard();
+    this.board = new MySnake.Board();
+    this.gameOver = false;
+    this.start();
+  };
+
+  View.prototype.handleGameOver = function() {
+    this.halt();
+    this.gameOver = true;
+    $("strong.game-over").removeClass("hidden");
+    $("strong.new-game").removeClass("hidden");
   };
 
   View.prototype.start = function() {
@@ -43,12 +69,6 @@
     };
   };
 
-  View.prototype.bindEvents = function() {
-    this.$el.focus();       //focuses on the figure element
-    this.$el.on("keydown", this.handleKeyDown.bind(this));
-    // can only install "keydown" on elements with FOCUS! give a *tabindex* in html if not a form or something ordinarily focusable
-  };
-
   View.prototype.handleKeyDown = function(e) {
     e.preventDefault();
     // console.log(e.keyCode);
@@ -59,6 +79,10 @@
   };
 
   View.prototype.togglePause = function() {
+    if (this.gameOver) {
+      return;
+    }
+
     if (this.paused) {
       this.start();
     } else {
@@ -69,7 +93,13 @@
   View.prototype.step = function() {
     this.board.growApples();
     this.board.handleCells();
-    this.board.moveSnake();
+    try {
+      if (!this.demoMode) {
+        this.board.moveSnake();
+      }
+    } catch(e) {
+      this.handleGameOver();
+    };
     this.board.render();
   };
 

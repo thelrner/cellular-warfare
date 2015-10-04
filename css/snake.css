@@ -26,27 +26,81 @@ body {
   font-family: sans-serif;
 }
 
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 body div.game-container {
-  width: 800px;
+  width: 810px;
+  margin: auto;
 }
 
 div.game-container div.game-viewer {
   position: relative;
+  display: block;
   float: left;
   margin: auto;
 }
 
 div.game-container div.game-viewer h1 {
-  font-size: 24px;
+  font-size: 36px;
   display: block;
   text-align: center;
+  padding: 10px;
 }
 
 figure.snake-game {
   position: relative;
+  display: block;
   border: 5px solid white;
   width: 500px;
   height: 500px;
+}
+
+figure.snake-game strong {
+  position: absolute;
+  margin: auto;
+}
+
+strong.game-over.hidden,
+strong.new-game.hidden {
+  display: none;
+}
+
+strong.game-over {
+  top: 150px;
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 30px;
+  cursor: default;
+}
+
+strong.new-game {
+  top: 250px;
+  left: 125px;
+  width: 250px;
+  display: block;
+  text-align: center;
+  margin: auto;
+  font-size: 30px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+figure.snake-game strong.new-game:hover {
+  color: green;
 }
 
 .snake-game div {
@@ -94,4 +148,41 @@ figure.snake-game {
 
 figure.snake-game:focus {
   outline: none;
+}
+
+div.game-container div.game-description {
+  float: left;
+  display: block;
+  margin-left: 20px;
+  margin-top: 61px;
+  width: 240px;
+}
+
+div.game-description p.scorecard {
+  display: block;
+  width: 150px;
+  border: 5px solid white;
+  padding: 20px;
+  font-size: 24px;
+}
+
+p.scorecard strong.title {
+  display: block;
+}
+
+p.scorecard strong.score {
+  margin-top: 5px;
+  display: block;
+  color: green;
+}
+
+div.game-text {
+  text-align: left;
+}
+
+div.game-text strong {
+  color: lightblue;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
