@@ -5,12 +5,16 @@
   var Cell = window.MySnake.Cell = function(board, pos) {
     this.pos = pos;
     this.board = board;
-    this.alive = false;
-    this.aliveNext = false;
-    this.friendly = false;
-    this.friendlyNext = false;
-    this.friendLiveCount = 0;
-    this.enemyLiveCount = 0;
+    // this.alive = false;
+    // this.aliveNext = false;
+    // this.friendly = false;
+    // this.friendlyNext = false;
+
+    // status can be either dead, friend, or enemy;
+    this.status = 'dead';
+    this.statusNext = 'dead';
+    this.friendCount = 0;
+    this.enemyCount = 0;
   };
 
   Cell.BIRTHREQ = 2;
@@ -40,7 +44,7 @@
     this.setNeighborLiveCounts();
 
     if (this.friendly) {
-      if (this.friendLiveCount === 2 || this.friendyCount === 3) {
+      if (this.friendCount === 2 || this.friendCount === 3) {
         this.aliveNext = true;
       } else {
         this.aliveNext = false;
@@ -48,12 +52,12 @@
         //PH**** - problems is, you convert to an enemy before actually painting to the board... your aliveNext has already changed to false, but you're read as a live enemy cell THIS ROUND!
       }
     } else {
-      if (this.friendLiveCount === 3) {
+      if (this.friendCount === 3) {
         this.convertToFriendly();
         this.aliveNext = true;
-      } else if (this.enemyLiveCount === 3) {
+      } else if (this.enemyCount === 3) {
         this.aliveNext = true;
-      } else if (this.enemyLiveCount === 2) {
+      } else if (this.enemyCount === 2) {
         this.aliveNext = this.alive;
       } else {
         this.aliveNext = false;
@@ -63,9 +67,9 @@
     //PH** -- make a status instvar -- either friendly, dead, or enemy...
 
 
-    // if (this.enemyLiveCount === Cell.LIVEREQ) {
+    // if (this.enemyCount === Cell.LIVEREQ) {
     //   this.aliveNext = true;
-    // } else if (this.enemyLiveCount === Cell.BIRTHREQ) {
+    // } else if (this.enemyCount === Cell.BIRTHREQ) {
     //   if (this.alive) {
     //     this.aliveNext = true;
     //   } else {
@@ -109,11 +113,11 @@
   };
 
   Cell.prototype.setNeighborLiveCounts = function() {
-    this.friendLiveCount = 0;
-    this.enemyLiveCount = 0;
+    this.friendCount = 0;
+    this.enemyCount = 0;
     this.neighbors().forEach( function(neighbor) {
       if (neighbor.alive) {
-        neighbor.friendly ? this.friendLiveCount += 1 : this.enemyLiveCount += 1;
+        neighbor.friendly ? this.friendCount += 1 : this.enemyCount += 1;
       }
     }.bind(this) );
   };
