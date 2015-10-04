@@ -9,6 +9,7 @@
     this.prevDir = "N";
     this.segments = [[39, 15], [38, 15], [37, 15]];
     this.appleJuice = 0;
+    this.commands = [];
   };
 
   Snake.APPLEPOWER = 2
@@ -26,6 +27,7 @@
 
   Snake.prototype.move = function() {
     this.checkPrevDir();
+    this.turnToCommands();
 
     var newPos = Utils.plus(this.segments.slice(-1)[0], War.DELTAS[this.dir]);
     this.checkCollisions(newPos);
@@ -58,22 +60,34 @@
     }
   };
 
+  Snake.prototype.turnToCommands = function() {
+    this.scrubCommands();
+    if (this.commands.length > 0) {
+      this.dir = this.commands.shift();
+    }
+  };
+
+  Snake.prototype.scrubCommands = function() {
+    if (this.commands.length > 0) {
+      while (this.isOpposite(this.commands[0])) {
+        this.commands.shift();
+      };
+    }
+  };
+
   Snake.prototype.isOpposite = function(dir) {
     return Utils.isOppositeDeltas(War.DELTAS[this.prevDir], War.DELTAS[dir]);
   };
 
-  Snake.prototype.turn = function(dir) {
-    if(this.isOpposite(dir)) {
-      return;
-    };
-    this.dir = dir;
+  Snake.prototype.addToCommands = function(dir) {
+    this.commands.push(dir);
   };
 
   Snake.prototype.checkSelfCollision = function(pos) {
     for (var i = 0; i < this.segments.length; i++) {
       if ( Utils.equals(this.segments[i], pos) ) {
         throw "lose"
-      };
+      }
     };
   };
 
