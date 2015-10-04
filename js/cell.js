@@ -43,34 +43,34 @@
 
     this.setNeighborLiveCounts();
 
-    if (this.foeCount === 3) {
-      this.statusNext = 'foe';
-    } else if (this.foeCount === 2) {
-      if (this.status === 'foe') {
-        this.statusNext = 'foe';
-      }
-    } else {
-      this.statusNext = 'dead';
-    }
-
-    // if (this.friendCount === 3) {
-    //   this.statusNext = 'friend';
-    // } else if (this.foeCount === 3) {
+    // if (this.foeCount === 3) {
     //   this.statusNext = 'foe';
-    //
-    // } else if (this.friendCount === 2) {
-    //   if (this.status === 'friend') {
-    //     this.statusNext = 'friend';
-    //   }
-    //   //if you're an enemy, you ignore friendCounts...
     // } else if (this.foeCount === 2) {
-    //   //by now, you'll already have checked for friendCount, so if you get here you must be an enemy
     //   if (this.status === 'foe') {
     //     this.statusNext = 'foe';
     //   }
     // } else {
     //   this.statusNext = 'dead';
     // }
+
+    if (this.friendCount === 3) {
+      this.statusNext = 'friend';
+    } else if (this.foeCount === 3) {
+      this.statusNext = 'foe';
+
+    } else if (this.friendCount === 2) {
+      if (this.status === 'friend') {
+        this.statusNext = 'friend';
+      }
+      //if you're an enemy, you ignore friendCounts...
+    } else if (this.foeCount === 2) {
+      //by now, you'll already have checked for friendCount, so if you get here you must be an enemy
+      if (this.status === 'foe') {
+        this.statusNext = 'foe';
+      }
+    } else {
+      this.statusNext = 'dead';
+    }
   };
 
   Cell.prototype.advanceNextState = function() {
