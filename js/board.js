@@ -10,7 +10,7 @@
     this.snake = new MySnake.Snake(this);
     this.apples = [];
     this.score = 0;
-    this.render();      //should render at initialize?
+    this.render();
   };
 
   Board.SIZE = 50;
@@ -43,7 +43,6 @@
 
   Board.prototype.render = function() {
     var $divs = $(".snake-game div");
-    // debugger;            //PH** - best place to debugger. before everything's rendered.
     $divs.removeClass();
 
     for (var i = 0; i < $divs.length; i++) {
@@ -88,7 +87,6 @@
     });
     coordinates.forEach( function(coord) {
       this.cells[coord].seedFriend();
-      //PH** mark the board, depending on whether friendly or not.
     }.bind(this));
   };
 

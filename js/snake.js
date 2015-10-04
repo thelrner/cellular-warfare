@@ -26,6 +26,8 @@
   };
 
   Snake.prototype.move = function() {
+    this.checkPrevDir();
+
     var newPos = Utils.plus(this.segments.slice(-1)[0], MySnake.DELTAS[this.dir]);
     this.checkCollision(newPos);
     this.checkOnBoard(newPos);
@@ -43,9 +45,14 @@
     };
   };
 
+  Snake.prototype.checkPrevDir = function() {
+    if (!this.dir) {
+      this.dir = this.prevDir;
+    }
+  };
+
   Snake.prototype.isOpposite = function(dir) {
     return Utils.isOppositeDeltas(MySnake.DELTAS[this.prevDir], MySnake.DELTAS[dir]);
-    //need to bind? think i'm invoking method-style a few lines below
   };
 
   Snake.prototype.turn = function(dir) {

@@ -37,10 +37,7 @@
     for (var i = 0; i < MySnake.Board.SIZE; i++) {
       for (var j = 0; j < MySnake.Board.SIZE; j++) {
         var $newCell = $("<div></div>");
-        //we don't assign class here because we intend to wipe it clean
         $newCell.data("position", [i, j]);
-        $newCell.attr('data-crazy', [i, j]);
-        //if we set an attribute "position", it would translate array to string
         this.$el.append($newCell);
       };
     };
@@ -72,12 +69,7 @@
   View.prototype.step = function() {
     this.board.growApples();
     this.board.handleCells();
-    try {
-      this.board.moveSnake();
-    } catch(e) {
-      alert(e);
-      clearInterval(this.intervalId);       //turns off interval;
-    };
+    this.board.moveSnake();
     this.board.render();
   };
 
