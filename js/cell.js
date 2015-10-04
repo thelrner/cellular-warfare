@@ -37,21 +37,8 @@
       return;
     }
 
-    //PH**** - if you're an enemy and there's three friendlies, you're gonna convert and die.
-    // if you're dead and there's three friendlies, you're gonna be a friendly.
-    // OR: if you're dead and there's three enemies, you're gonna be an enemy
-
+    // enemy cells surrounded by 3 friendlies converts to a friendly.
     this.setNeighborLiveCounts();
-
-    // if (this.foeCount === 3) {
-    //   this.statusNext = 'foe';
-    // } else if (this.foeCount === 2) {
-    //   if (this.status === 'foe') {
-    //     this.statusNext = 'foe';
-    //   }
-    // } else {
-    //   this.statusNext = 'dead';
-    // }
 
     if (this.friendCount === 3) {
       this.statusNext = 'friend';
@@ -77,7 +64,7 @@
     this.status = this.statusNext;
 
     this.board.clearCellClasses(this.pos);
-    var boardDiv = this.board.coolGrid[this.pos]
+    var boardDiv = this.board.coolGrid[this.pos];
 
     //PH -- cases here!!!
     boardDiv[this.status] = true;
