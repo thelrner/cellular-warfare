@@ -14,14 +14,10 @@
       sumArray[i] = array1[i] + array2[i];
     };
 
-    return sumArray;      //could also have modified array1 in-place
+    return sumArray;
   };
 
   Utils.equals = function(array1, array2) {
-    if (array1.length !== array2.length) {
-      return false;
-    };
-
     for (var i = 0; i < array1.length; i++) {
       if (array1[i] !== array2[i]) {
         return false;
@@ -37,7 +33,7 @@
     }
 
     if (array1.length !== array2.length) {
-      throw "can't add different size arrays";
+      throw "can't compare different sized arrays";
     };
 
     for (var i = 0; i < array1.length; i++) {

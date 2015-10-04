@@ -1,6 +1,4 @@
 (function() {
-//need IIFE to create scope, private variables/functions, but still have the server run
-
   window.MySnake = window.MySnake || {};
 
   var View = MySnake.View = function(el) {
@@ -23,7 +21,7 @@
   };
 
   View.prototype.bindEvents = function() {
-    this.$el.focus();       //focuses on the figure element
+    this.$el.focus();
     this.$el.on("keydown", this.handleKeyDown.bind(this));
     this.$el.on("click", "strong.new-game", this.startNewGame.bind(this));
   };
@@ -71,7 +69,6 @@
 
   View.prototype.handleKeyDown = function(e) {
     e.preventDefault();
-    // console.log(e.keyCode);
     if (e.keyCode === 32) {
       this.togglePause();
     }

@@ -1,5 +1,4 @@
 (function() {
-  //we wrap everything in an IIFE to create sense of closure and scope
   window.MySnake = window.MySnake || {};
 
   var Utils = window.MySnake.Utils;
@@ -32,7 +31,7 @@
     this.checkCollisions(newPos);
 
     this.segments.push(newPos);
-    this.board.coolGrid[newPos].snake = true;
+    this.board.gridClasses[newPos].snake = true;
     this.prevDir = this.dir;
 
     this.cutTailOrDrinkJuice();
@@ -46,10 +45,10 @@
 
   Snake.prototype.cutTailOrDrinkJuice = function() {
     if (this.appleJuice) {
-      this.appleJuice -= 1;     //PH - extends snake here by not cutting tail
+      this.appleJuice -= 1;
     } else {
       var lastPos = this.segments.shift();
-      this.board.coolGrid[lastPos].snake = false;
+      this.board.gridClasses[lastPos].snake = false;
     };
   };
 
@@ -67,7 +66,7 @@
     if(this.isOpposite(dir)) {
       return;
     };
-    this.dir = dir;       //QUESTION: still updates this.dir after throw?
+    this.dir = dir;
   };
 
   Snake.prototype.checkSelfCollision = function(pos) {

@@ -4,9 +4,9 @@
   var Utils = window.MySnake.Utils;
 
   var Board = window.MySnake.Board = function(options) {
-    this.coolGrid = {};
+    this.gridClasses = {};
     this.cells = {};
-    this.setupCoolGridAndCells();
+    this.setupGridClassesAndCells();
     this.snake = new MySnake.Snake(this);
     this.apples = [];
     this.score = 0;
@@ -27,10 +27,10 @@
     }
   };
 
-  Board.prototype.setupCoolGridAndCells = function() {
+  Board.prototype.setupGridClassesAndCells = function() {
     for (var i = 0; i < Board.SIZE; i++) {
       for (var j = 0; j < Board.SIZE; j++) {
-        this.coolGrid[[i, j]] = {
+        this.gridClasses[[i, j]] = {
           snake: false,
           apple: false,
           dead: false,
@@ -53,7 +53,7 @@
     for (var i = 0; i < $divs.length; i++) {
       var $currentDiv = $($divs[i]);
       var currentPos = $currentDiv.data("position");
-      var divClasses = this.coolGrid[currentPos];
+      var divClasses = this.gridClasses[currentPos];
 
       Object.keys(divClasses).forEach( function(className) {
         if (divClasses[className]) {
@@ -120,7 +120,7 @@
     };
 
     this.apples.push(randomPos);
-    this.coolGrid[randomPos].apple = true;
+    this.gridClasses[randomPos].apple = true;
   };
 
   Board.prototype.generateRandPos = function(padding) {
@@ -131,7 +131,7 @@
   };
 
   Board.prototype.isApple = function(pos) {
-    return this.coolGrid[pos].apple;
+    return this.gridClasses[pos].apple;
   };
 
   Board.prototype.turnSnake = function(dir) {
@@ -145,7 +145,7 @@
   Board.prototype.handleAppleEaten = function() {
     this.incrementScore(Board.APPLE_VALUE);
     var applePos = this.apples.pop();
-    this.coolGrid[applePos].apple = false;
+    this.gridClasses[applePos].apple = false;
     this.seedFriends(applePos);
   };
 
@@ -154,7 +154,7 @@
   };
 
   Board.prototype.clearCellClasses = function(pos) {
-    var div = this.coolGrid[pos];
+    var div = this.gridClasses[pos];
     div.dead = false;
     div.friend = false;
     div.foe = false;

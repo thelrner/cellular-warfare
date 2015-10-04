@@ -1,5 +1,4 @@
 (function() {
-  //PH** - have the board run all the cells every time so it can detect if
   window.MySnake = window.MySnake || {};
 
   var Cell = window.MySnake.Cell = function(board, pos) {
@@ -28,7 +27,7 @@
   Cell.FPENT_DELTAS = [[-1, 0], [0, 0], [-1, 1], [0, -1], [1, 0]];
 
   Cell.prototype.prepareNextState = function() {
-    if (this.board.coolGrid[this.pos].apple) {
+    if (this.board.gridClasses[this.pos].apple) {
       this.statusNext = 'dead';
       return;
     }
@@ -61,7 +60,7 @@
     this.status = this.statusNext;
 
     this.board.clearCellClasses(this.pos);
-    var boardDiv = this.board.coolGrid[this.pos];
+    var boardDiv = this.board.gridClasses[this.pos];
 
     boardDiv[this.status] = true;
   };
