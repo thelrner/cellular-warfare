@@ -34,15 +34,21 @@
 
     this.segments.push(newPos);
     this.board.gridClasses[newPos].snake = true;
+    this.board.updateHead(newPos);
     this.prevDir = this.dir;
 
     this.cutTailOrDrinkJuice();
   };
 
   Snake.prototype.checkCollisions = function(pos) {
-    this.checkSelfCollision(pos);
-    this.checkEdgeCollision(pos);
-    this.checkAndHandleApple(pos);
+    try {
+      this.board.render();
+      this.checkSelfCollision(pos);
+      this.checkEdgeCollision(pos);
+      this.checkAndHandleApple(pos);
+    } catch(e) {
+      this.board.alertLoss();
+    };
   }
 
   Snake.prototype.cutTailOrDrinkJuice = function() {

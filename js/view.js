@@ -24,6 +24,7 @@
     this.$el.focus();
     this.$el.on("keydown", this.handleKeyDown.bind(this));
     this.$el.on("click", "strong.new-game", this.startNewGame.bind(this));
+    this.$el.on("loss", this.handleGameOver.bind(this));
   };
 
   View.prototype.startNewGame = function() {
@@ -71,6 +72,10 @@
     e.preventDefault();
     if (e.keyCode === 32) {
       this.togglePause();
+      return;
+    }
+    if (!View.KEYMAPS[e.keyCode]) {
+      return;
     }
     this.board.turnSnake( View.KEYMAPS[e.keyCode] );
   };
@@ -90,13 +95,9 @@
   View.prototype.step = function() {
     this.board.growApples();
     this.board.handleCells();
-    try {
-      if (!this.demoMode) {
-        this.board.moveSnake();
-      }
-    } catch(e) {
-      this.handleGameOver();
-    };
+    if (!this.demoMode) {
+      this.board.moveSnake();
+    }
     this.board.render();
   };
 

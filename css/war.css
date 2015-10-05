@@ -114,6 +114,10 @@ figure.war-game strong.new-game:hover {
   background: green;
 }
 
+.war-game div.snake.head {
+  background: #1AE007;
+}
+
 .war-game div.apple {
   background: lightblue;
 }
@@ -128,15 +132,15 @@ figure.war-game strong.new-game:hover {
 .war-game div.foe {
   height: 8px;
   width: 8px;
-  border: 1px solid rgb(127, 0, 0);    /* if no border transparency support */
-  border: 1px solid rgba(255, 0, 0, .75);
+  border: 1px solid rgb(255, 0, 0);    /* if no border transparency support */
+  /*border: 1px solid rgba(255, 0, 0, .75);*/
 }
 
 .war-game div.friend {
   height: 8px;
   width: 8px;
   border: 1px solid lightblue;
-  border: 1px solid rgba(173, 216, 230, .75);
+  /*border: 1px solid rgba(173, 216, 230, .75);*/
 }
 
 .war-game .score {

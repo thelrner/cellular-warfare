@@ -8,6 +8,7 @@
     this.cells = {};
     this.setupGridClassesAndCells();
     this.snake = new War.Snake(this);
+    this.head = this.snake.segments.slice(-1)[0];
     this.apples = [];
     this.score = 0;
     this.render();
@@ -32,6 +33,7 @@
       for (var j = 0; j < Board.SIZE; j++) {
         this.gridClasses[[i, j]] = {
           snake: false,
+          head: false,
           apple: false,
           dead: false,
           foe: false,
@@ -40,10 +42,6 @@
         this.cells[[i, j]] = new War.Cell(this, [i, j]);
       };
     };
-  };
-
-  Board.prototype.clearBoard = function() {
-    $(".war-game div").removeClass();
   };
 
   Board.prototype.render = function() {
@@ -63,6 +61,12 @@
     };
 
     $("p.scorecard strong.score").text(this.score);
+  };
+
+  Board.prototype.updateHead = function(pos) {
+    this.gridClasses[this.head].head = false;
+    this.head = pos;
+    this.gridClasses[this.head].head = true;
   };
 
   Board.prototype.seedFoes = function() {
@@ -162,6 +166,15 @@
 
   Board.prototype.scoreCellConversion = function() {
     this.incrementScore(Board.CAPTURE_VALUE);
+  };
+
+  Board.prototype.alertLoss = function() {
+    console.log('handling loss');
+    $(".war-game div").trigger("loss");
+  };
+
+  Board.prototype.clearBoard = function() {
+    $(".war-game div").removeClass();
   };
 
 })();
