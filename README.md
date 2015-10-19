@@ -1,5 +1,8 @@
 ##Cellular Warfare
 
+####[Live URL][live_url]
+[live_url]: http://www.peterhua.xyz/war/cellular_warfare.html
+
 Part cellular automata sandbox, part snake.
 
 Regular snake rules apply. Wage war on evil red cells -- eat apples to spawn friendly cells. Snake can pass through cells. Capture enemy cells by surrounding them with your own.
